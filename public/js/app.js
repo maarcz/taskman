@@ -60275,9 +60275,24 @@ var SingleProject = function (_Component) {
       });
     }
   }, {
+    key: 'handleMarkTaskAsCompleted',
+    value: function handleMarkTaskAsCompleted(taskId) {
+      var _this4 = this;
+
+      __WEBPACK_IMPORTED_MODULE_0_axios___default.a.put('/api/tasks/' + taskId).then(function (response) {
+        _this4.setState(function (prevState) {
+          return {
+            tasks: prevState.tasks.filter(function (task) {
+              return task.id !== taskId;
+            })
+          };
+        });
+      });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var _this4 = this;
+      var _this5 = this;
 
       var _state = this.state,
           project = _state.project,
@@ -60311,7 +60326,7 @@ var SingleProject = function (_Component) {
                 ),
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                   'button',
-                  { className: 'btn btn-primary btn-sm' },
+                  { className: 'btn btn-primary btn-sm', onClick: this.handleMarkProjectAsCompleted },
                   'Mark as completed'
                 ),
                 __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement('hr', null),
@@ -60347,14 +60362,11 @@ var SingleProject = function (_Component) {
                   tasks.map(function (task) {
                     return __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                       'li',
-                      {
-                        className: 'list-group-item d-flex justify-content-between align-items-center',
-                        key: task.id
-                      },
+                      { className: 'list-group-item d-flex justify-content-between align-items-center', key: task.id },
                       task.title,
                       __WEBPACK_IMPORTED_MODULE_1_react___default.a.createElement(
                         'button',
-                        { className: 'btn btn-primary btn-sm', onClick: _this4.handleMarkProjectAsCompleted },
+                        { className: 'btn btn-primary btn-sm', onClick: _this5.handleMarkTaskAsCompleted.bind(_this5, task.id) },
                         'Mark as completed'
                       )
                     );
